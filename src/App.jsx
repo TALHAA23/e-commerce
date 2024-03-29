@@ -1,3 +1,5 @@
+import Routes from "./Routes/Routes";
+
 export default function App() {
-  return <h1 className=" text-4xl">Hello World</h1>;
+  return <Routes />;
 }
