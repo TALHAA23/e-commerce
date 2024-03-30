@@ -1,3 +1,5 @@
+import ProductListing from "../components/ProductListing/ProductListing";
+
 export default function Home() {
-  return <h1>this is home page</h1>;
+  return <ProductListing />;
 }
