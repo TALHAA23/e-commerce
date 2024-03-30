@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 
 export default function NavBar() {
   return (
-    <nav className=" sticky z-50 top-0 w-full bg-green-500 flex gap-2 items-center justify-between px-3">
+    <nav className=" sticky z-50 top-0 w-full bg-color-base text-white flex gap-2 items-center justify-between px-3">
       {/* <div className="sm:hidden flex gap-2 py-3">
         <Logo />
         <Branding />
