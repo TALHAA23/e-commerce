@@ -11,6 +11,10 @@ body {
     @apply bg-[#3c1884]
 }
 
+.bg-color-light {
+    @apply bg-[#572EA8]
+}
+
 .bg-color-lighter {
     @apply bg-[#584188]
 }
