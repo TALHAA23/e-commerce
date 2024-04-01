@@ -1,9 +1,23 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 export default function SearchBar() {
+  const searchParam = useSearchParams()[0].get("q");
+  const navigate = useNavigate();
+  function handleSubmit(event) {
+    event.preventDefault();
+    const searchKeyword = event.target.search.value;
+    navigate(`/find?q=${searchKeyword}`);
+  }
+
   return (
-    <form className="grow h-full max-w-[600px] flex justify-center py-2 ">
+    <form
+      onSubmit={handleSubmit}
+      className="grow h-full max-w-[600px] flex justify-center py-2 "
+    >
       <input
         type="search"
         name="search"
+        required
         className="peer w-full h-full text-black text-lg rounded-l-full bg-white/90 px-2 focus:outline-none ring-4 ring-transparent focus:ring-[#3c1845] transition-all duration-200"
       />
 

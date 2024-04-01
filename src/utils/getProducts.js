@@ -4,21 +4,26 @@ import {
   startAfter,
   query,
   getDocs,
+  where,
+  or,
 } from "@firebase/firestore";
 import { productCollection } from "../assets/firebase";
+import Filter from "../components/FilterAndCustomizer/Filter";
 export default async function getProducts(
   lastDoc,
   setLastDoc,
+  queryCriteria = ["title", "asc"],
   itemsPerPage = 10
 ) {
+  const [property, order] = queryCriteria;
   let productsQuery = lastDoc
     ? query(
         productCollection,
-        orderBy("title", "asc"),
+        orderBy(property, order),
         startAfter(lastDoc),
         limit(itemsPerPage)
       )
-    : query(productCollection, orderBy("title", "asc"), limit(itemsPerPage));
+    : query(productCollection, orderBy(property, order), limit(itemsPerPage));
 
   const querySnapshot = await getDocs(productsQuery);
   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
