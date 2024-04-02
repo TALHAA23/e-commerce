@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom";
 import Home from "../pages/Home";
 import Layout from "../components/Layout";
 import Find from "../pages/Find";
+import Catagories from "../pages/Catagories";
 
 export default function Routes() {
   return useRoutes([
@@ -16,6 +17,10 @@ export default function Routes() {
         {
           path: "/find",
           element: <Find />,
+        },
+        {
+          path: "/c/:category",
+          element: <Catagories />,
         },
       ],
     },

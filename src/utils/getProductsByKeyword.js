@@ -1,5 +1,5 @@
 import { productCollection } from "../assets/firebase";
-import { query, where, getDocs } from "@firebase/firestore";
+import { query, where, getDocs, or } from "@firebase/firestore";
 
 export default async function getProductByKeyword(keyword) {
   // TODO: Convert the keyword to lowercase
