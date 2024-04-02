@@ -12,12 +12,11 @@ export default async function getProducts(
   lastDoc,
   setLastDoc,
   sort = ["title", "asc"],
-  itemsPerPage = 10
+  itemsPerPage = 10,
+  filter = {}
 ) {
-  const filter = {
-    // category: ["Category1", "Category2"],
-  };
-  const entries = Object.entries(filter);
+  console.log(filter);
+  const filterEntries = Object.entries(filter);
   const [property, order] = sort;
   let productsQuery = lastDoc
     ? query(
@@ -29,7 +28,7 @@ export default async function getProducts(
     : query(
         productCollection,
         or(
-          ...entries
+          ...filterEntries
             .map(([key, value]) => value.map((val) => where(key, "==", val)))
             .flat()
         ),

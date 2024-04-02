@@ -7,10 +7,10 @@ const options = [
   "newest to oldest",
   "oldest to newest",
 ];
-export default function Filter() {
+export default function Sorter() {
   const [searchParam, setSearchParam] = useSearchParams();
 
-  function createFilterQuery(event) {
+  function addSortToURL(event) {
     const queryParam = event.target.value;
     const query = new URLSearchParams(`f=${queryParam}`);
     setSearchParam(query);
@@ -19,7 +19,7 @@ export default function Filter() {
   return (
     <select
       name="filter"
-      onChange={createFilterQuery}
+      onChange={addSortToURL}
       className="px-2 py-1 rounded border border-[#3C1884] focus:outline-none focus:border-2 capitalize"
       value={searchParam.get("f")}
     >

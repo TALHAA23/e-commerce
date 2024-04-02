@@ -13,6 +13,7 @@ export default async function getProductByCatagory(
   setLastDoc,
   sort = ["title", "asc"],
   itemsPerPage = 10,
+  filter = {},
   category
 ) {
   const [property, order] = sort;
