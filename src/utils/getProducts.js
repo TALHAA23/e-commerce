@@ -16,7 +16,6 @@ export default async function getProducts(
   filter = {}
 ) {
   const filterEntries = Object.entries(filter);
-  console.log(filterEntries);
   const [property, order] = sort;
   let productsQuery = lastDoc
     ? query(
@@ -44,7 +43,6 @@ export default async function getProducts(
   const querySnapshot = await getDocs(productsQuery);
   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
   const newProducts = querySnapshot.docs.map((doc) => doc.data());
-  console.table(newProducts);
   setLastDoc(lastVisible);
   return newProducts;
 }

@@ -8,26 +8,27 @@ import {
 } from "@firebase/firestore";
 import { productCollection } from "../assets/firebase";
 
-export default async function getProductByCatagory(
+export default async function getProductsByFieldName(
   lastDoc,
   setLastDoc,
   sort = ["title", "asc"],
   itemsPerPage = 10,
   filter = {},
-  category
+  fieldNameAndValueArray
 ) {
   const [property, order] = sort;
+  const [fieldName, fieldValue] = fieldNameAndValueArray;
   let productsQuery = lastDoc
     ? query(
         productCollection,
-        where("category", "==", category),
+        where(fieldName, "==", fieldValue),
         orderBy(property, order),
         startAfter(lastDoc),
         limit(itemsPerPage)
       )
     : query(
         productCollection,
-        where("category", "==", category),
+        where(fieldName, "==", fieldValue),
         orderBy(property, order),
         limit(itemsPerPage)
       );

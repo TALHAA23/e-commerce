@@ -2,6 +2,7 @@ import CreateMenuSection from "./CreateMenuSection";
 import { useMenuState } from "../../Context/MenuStateContext";
 
 const catagories = ["Category1", "Category2", "Category3"];
+const brands = ["Brand1", "Brand2", "Brand3"];
 
 export default function Menu() {
   const [isMenuShown, setIsMenuShown] = useMenuState();
@@ -17,15 +18,21 @@ export default function Menu() {
         <h1 className="w-[90%] text-3xl font-bold">Menu</h1>
         <button onClick={() => setIsMenuShown(false)}>
           <img
-            src="../../../public/icons/cross-circle-svgrepo-com.svg"
-            alt="cross"
+            src="/icons/cross-circle-svgrepo-com.svg"
+            alt="shrink"
             className=" w-7 aspect-square"
           />
         </button>
       </div>
       <CreateMenuSection
-        sectionTitle="catagories"
+        sectionTitle="categories"
+        forProperty={"category"}
         sectionOptions={catagories}
+      />
+      <CreateMenuSection
+        sectionTitle="Brands"
+        forProperty={"brand"}
+        sectionOptions={brands}
       />
     </div>
   );

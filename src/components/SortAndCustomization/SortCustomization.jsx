@@ -22,7 +22,7 @@ const FilterButton = () => {
       className="flex md:hidden items-center gap-3 border-2  border-[#3C1884] rounded px-2 text-[#3C1884] hover:scale-95 cursor-pointer"
     >
       <img
-        src="../../../public/icons/filter-svgrepo-com.svg"
+        src="/icons/filter-svgrepo-com.svg"
         alt="filter"
         className=" w-10 aspect-square"
       />
@@ -36,7 +36,7 @@ const MenuButton = () => {
   return (
     <img
       onClick={() => setMenuState(true)}
-      src="../../../public/icons/menu-alt-1-svgrepo-com.svg"
+      src="/icons/menu-alt-1-svgrepo-com.svg"
       alt="menu"
       className=" w-12 hover:bg-gray-300 rounded"
     />
