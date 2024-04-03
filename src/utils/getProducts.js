@@ -15,12 +15,17 @@ export default async function getProducts(
   itemsPerPage = 10,
   filter = {}
 ) {
-  console.log(filter);
   const filterEntries = Object.entries(filter);
+  console.log(filterEntries);
   const [property, order] = sort;
   let productsQuery = lastDoc
     ? query(
         productCollection,
+        or(
+          ...filterEntries
+            .map(([key, value]) => value.map((val) => where(key, "==", val)))
+            .flat()
+        ),
         orderBy(property, order),
         startAfter(lastDoc),
         limit(itemsPerPage)
@@ -39,6 +44,7 @@ export default async function getProducts(
   const querySnapshot = await getDocs(productsQuery);
   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
   const newProducts = querySnapshot.docs.map((doc) => doc.data());
+  console.table(newProducts);
   setLastDoc(lastVisible);
   return newProducts;
 }

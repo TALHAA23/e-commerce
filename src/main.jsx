@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import FilterProvider from "./Context/filterContext.jsx";
+import MenuStateProvider from "./Context/MenuStateContext.jsx";
 
 const queryClient = new QueryClient();
 
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools />
         <FilterProvider>
-          <App />
+          <MenuStateProvider>
+            <App />
+          </MenuStateProvider>
         </FilterProvider>
       </QueryClientProvider>
     </BrowserRouter>
