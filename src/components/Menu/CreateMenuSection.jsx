@@ -19,7 +19,7 @@ export default function CreateMenuSection({
             <p>{option}</p>
             <img
               className="w-9"
-              src="../../../public/icons/right-arrow-svgrepo-com.svg"
+              src="/icons/right-arrow-svgrepo-com.svg"
               alt=">"
             />
           </Link>

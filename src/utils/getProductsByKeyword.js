@@ -17,7 +17,7 @@ export default async function getProductByKeyword(keyword) {
   const querySnapshot = await getDocs(productsQuery);
   let products = [];
   querySnapshot.forEach((doc) => {
-    products.push(doc.data());
+    products.push({ ...doc.data(), id: doc.id });
   });
   return products;
 }
