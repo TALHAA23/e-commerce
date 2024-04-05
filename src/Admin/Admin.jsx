@@ -1,8 +1,19 @@
 import { Navigate } from "react-router-dom";
-import { useIsUserAuthenticated } from "../Context/UserProvider";
+import {
+  useAuthenticationLoading,
+  useIsUserAuthenticated,
+} from "../Context/UserProvider";
 import Menu from "./AdminComponents/Menu";
+import Loader from "../components/Loader/Loader";
 
 export default function Admin() {
   const isAuthenticated = useIsUserAuthenticated();
-  return isAuthenticated ? <Menu /> : <Navigate to="/admin/login" />;
+  const loading = useAuthenticationLoading();
+  return loading ? (
+    <Loader />
+  ) : isAuthenticated ? (
+    <Menu />
+  ) : (
+    <Navigate to="/admin/login" />
+  );
 }

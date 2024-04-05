@@ -20,7 +20,7 @@ export default function Sorter() {
     <select
       name="filter"
       onChange={addSortToURL}
-      className="px-2 py-1 rounded border-2 border-[#3C1884] text-lg font-bold text-[#3C1884] focus:outline-none focus:border-2 capitalize"
+      className="py-1 w-fit rounded border-2 border-[#3C1884] text-sm sm:text-lg font-bold text-[#3C1884] focus:outline-none focus:border-2 capitalize"
       value={searchParam.get("f")}
     >
       {options.map((option, index) => (

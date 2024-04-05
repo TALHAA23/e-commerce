@@ -13,7 +13,7 @@ export default function Checkbox({ name, value }) {
         id={value}
         type="checkbox"
       />
-      <label class="cbx" for={value}>
+      <label class="cbx" htmlFor={value}>
         <span>
           <svg width="12px" height="10px"></svg>
         </span>

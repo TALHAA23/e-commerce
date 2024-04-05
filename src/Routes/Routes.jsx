@@ -5,8 +5,8 @@ import Find from "../pages/Find";
 import ProductsByProperty from "../pages/ProductsByProperty";
 import { Suspense, lazy } from "react";
 import Loader from "../components/Loader/Loader";
-import AdminLayout from "../Admin/AdminComponents/AdminLayout";
-
+// import AdminLayout from "../Admin/AdminComponents/AdminLayout";
+const AdminLayout = lazy(() => import("../Admin/AdminComponents/AdminLayout"));
 const UserProvider = lazy(() => import("../Context/UserProvider"));
 const Admin = lazy(() => import("../Admin/Admin"));
 const Upload = lazy(() => import("../Admin/AdminPages/Upload"));
@@ -36,9 +36,13 @@ export default function Routes() {
     {
       path: "/admin",
       element: (
-        <UserProvider>
-          <AdminLayout />
-        </UserProvider>
+        <Suspense fallback={<Loader />}>
+          <UserProvider>
+            <Suspense fallback={<Loader />}>
+              <AdminLayout />
+            </Suspense>
+          </UserProvider>
+        </Suspense>
       ),
       children: [
         {

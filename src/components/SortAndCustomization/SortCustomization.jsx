@@ -17,17 +17,12 @@ export default function SortCustomization() {
 const FilterButton = () => {
   const setIsFilterVisable = useFilterVisablityControlsAndValue()[1];
   return (
-    <div
+    <img
       onClick={() => setIsFilterVisable((prev) => !prev)}
-      className="flex md:hidden items-center gap-3 border-2  border-[#3C1884] rounded px-2 text-[#3C1884] hover:scale-95 cursor-pointer"
-    >
-      <img
-        src="/icons/filter-svgrepo-com.svg"
-        alt="filter"
-        className=" w-10 aspect-square"
-      />
-      <h1 className=" text-lg font-bold">Filter</h1>
-    </div>
+      src="/icons/filter-svgrepo-com.svg"
+      alt="filter"
+      className=" w-10 aspect-square md:hidden items-center gap-3 border-2  border-[#3C1884] rounded px-2 text-[#3C1884]"
+    />
   );
 };
 

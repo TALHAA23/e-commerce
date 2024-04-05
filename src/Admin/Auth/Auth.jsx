@@ -3,9 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import loginUser from "../AdminUtils/login";
 import { Link, useNavigate } from "react-router-dom";
 import { lazy, useEffect } from "react";
+import { useIsUserAuthenticated } from "../../Context/UserProvider";
 
 export default function Auth() {
   const navigate = useNavigate();
+  const isAuthenticated = useIsUserAuthenticated();
   const { mutate, isPending, isSuccess, isError, error, data } = useMutation({
     mutationKey: ["auth"],
     mutationFn: handleSubmit,
@@ -18,6 +20,10 @@ export default function Auth() {
     const response = await loginUser(email, password);
     return response;
   }
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/admin");
+  }, [isAuthenticated]);
 
   useEffect(() => {
     isSuccess && navigate("/admin");

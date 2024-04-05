@@ -1,10 +1,16 @@
-import { useMutation } from "@tanstack/react-query";
-import AvailabilityCheck from "../AdminComponents/AvailabilityCheck";
 import "../AdminUtils/form.css";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import AvailabilityCheck from "../AdminComponents/AvailabilityCheck";
 import uploadProduct from "../AdminUtils/upload";
-import uploadProductImage from "../AdminUtils/uploadProductImage";
+import { getUtils } from "../../utils/getUtils";
 const textFields = ["title", "category", "brand"];
 export default function Upload() {
+  const brandAndCategoiresQuery = useQuery({
+    queryKey: ["brand&Categories"],
+    queryFn: getUtils,
+    staleTime: 86400000,
+  });
+
   const { mutate, isPending, isSuccess, data, isError, error } = useMutation({
     mutationKey: ["upload"],
     mutationFn: handleSubmit,
@@ -53,23 +59,34 @@ export default function Upload() {
         {/* category */}
         <select
           name="category"
-          defaultValue="Chose a category"
           className=" rounded-md border w-full py-4 px-1 text-[0.875rem] text-gray-400"
         >
           <option disabled selected>
             Choose a Category
           </option>
-          <option>Option 1</option>
+          {brandAndCategoiresQuery?.isSuccess ? (
+            brandAndCategoiresQuery.data.categories.map((category) => (
+              <option value={category}>{category}</option>
+            ))
+          ) : (
+            <option>---</option>
+          )}
         </select>
         {/* Brands */}
         <select
           name="brand"
-          className="rounded-md border w-full py-4 px-1 text-[0.875rem] text-gray-400"
+          className=" rounded-md border w-full py-4 px-1 text-[0.875rem] text-gray-400"
         >
           <option disabled selected>
             Choose a brand
           </option>
-          <option>Option 1</option>
+          {brandAndCategoiresQuery?.isSuccess ? (
+            brandAndCategoiresQuery.data.brands.map((brand) => (
+              <option value={brand}>{brand}</option>
+            ))
+          ) : (
+            <option>---</option>
+          )}
         </select>
         {/* availablity */}
         <AvailabilityCheck />
@@ -91,7 +108,7 @@ export default function Upload() {
           className="submit disabled:opacity-40"
           disabled={isPending}
         >
-          {isPending ? "processing" : "Login"}
+          {isPending ? "processing" : "upload"}
         </button>
       </form>
     </div>

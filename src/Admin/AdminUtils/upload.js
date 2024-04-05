@@ -1,6 +1,7 @@
 import { addDoc } from "firebase/firestore";
 import uploadProductImage from "./uploadProductImage"; // Assuming uploadProductImage is in a separate file
 import { productCollection } from "../../assets/firebase";
+import { recordBrandAndCategory } from "./recordBrandAndCategory";
 export default async function uploadProduct(productData) {
   const lowercaseProductData = {
     ...productData,
@@ -8,7 +9,6 @@ export default async function uploadProduct(productData) {
     category: productData.category?.toLowerCase(),
     brand: productData.brand?.toLowerCase(),
   };
-  // Upload image and get download URL
   let imageUrl;
   if (productData.image) {
     try {
@@ -18,15 +18,14 @@ export default async function uploadProduct(productData) {
       throw error;
     }
   }
-
   // Update image property with download URL (if available)
   lowercaseProductData.image = imageUrl;
-  console.log(lowercaseProductData);
-
-  // Get a reference to the products collection in Firestore
   try {
-    // Add the product document to Firestore
     const docRef = await addDoc(productCollection, lowercaseProductData);
+    await recordBrandAndCategory({
+      brand: lowercaseProductData.brand,
+      category: lowercaseProductData.category,
+    });
     console.log("Product added with ID:", docRef.id);
     return docRef.id; // Return the document ID
   } catch (error) {

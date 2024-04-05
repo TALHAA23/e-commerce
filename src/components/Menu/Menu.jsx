@@ -1,11 +1,15 @@
 import CreateMenuSection from "./CreateMenuSection";
 import { useMenuState } from "../../Context/MenuStateContext";
-
-const catagories = ["Category1", "Category2", "Category3"];
-const brands = ["Brand1", "Brand2", "Brand3"];
-
+import { useQuery } from "@tanstack/react-query";
+import { getUtils } from "../../utils/getUtils";
+import Loader from "../Loader/Loader";
 export default function Menu() {
   const [isMenuShown, setIsMenuShown] = useMenuState();
+  const { isPending, isError, error, data } = useQuery({
+    queryKey: ["brand&Categories"],
+    queryFn: getUtils,
+    staleTime: 86400000,
+  });
   return (
     <div
       className={`fixed left-0 overflow-y-auto p-3 bg-gray-200 w-full max-w-[400px] h-[100vh] z-[60]
@@ -24,16 +28,24 @@ export default function Menu() {
           />
         </button>
       </div>
-      <CreateMenuSection
-        sectionTitle="categories"
-        forProperty={"category"}
-        sectionOptions={catagories}
-      />
-      <CreateMenuSection
-        sectionTitle="Brands"
-        forProperty={"brand"}
-        sectionOptions={brands}
-      />
+      {isPending ? (
+        <Loader />
+      ) : isError ? (
+        <h1>{error.message}</h1>
+      ) : (
+        <>
+          <CreateMenuSection
+            sectionTitle="categories"
+            forProperty={"category"}
+            sectionOptions={data.categories}
+          />
+          <CreateMenuSection
+            sectionTitle="Brands"
+            forProperty={"brand"}
+            sectionOptions={data.brands}
+          />
+        </>
+      )}
     </div>
   );
 }
