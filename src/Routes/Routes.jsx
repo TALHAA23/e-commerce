@@ -5,12 +5,13 @@ import Find from "../pages/Find";
 import ProductsByProperty from "../pages/ProductsByProperty";
 import { Suspense, lazy } from "react";
 import Loader from "../components/Loader/Loader";
-import Auth from "../Admin/Auth/Auth";
+import AdminLayout from "../Admin/AdminComponents/AdminLayout";
 
 const UserProvider = lazy(() => import("../Context/UserProvider"));
 const Admin = lazy(() => import("../Admin/Admin"));
 const Upload = lazy(() => import("../Admin/AdminPages/Upload"));
 const Modification = lazy(() => import("../Admin/AdminPages/Modification"));
+const Auth = lazy(() => import("../Admin/Auth/Auth"));
 
 export default function Routes() {
   return useRoutes([
@@ -34,20 +35,27 @@ export default function Routes() {
     },
     {
       path: "/admin",
+      element: (
+        <UserProvider>
+          <AdminLayout />
+        </UserProvider>
+      ),
       children: [
         {
           index: true,
           element: (
             <Suspense fallback={<Loader />}>
-              <UserProvider>
-                <Admin />
-              </UserProvider>
+              <Admin />
             </Suspense>
           ),
         },
         {
           path: "login",
-          element: <Auth />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Auth />
+            </Suspense>
+          ),
         },
         {
           path: "upload",

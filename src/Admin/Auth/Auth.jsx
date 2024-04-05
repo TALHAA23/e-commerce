@@ -1,10 +1,8 @@
 import "./form.css";
 import { useMutation } from "@tanstack/react-query";
-// import loginUser from "../AdminUtils/login";
+import loginUser from "../AdminUtils/login";
 import { Link, useNavigate } from "react-router-dom";
 import { lazy, useEffect } from "react";
-
-const loginUser = lazy(() => import("../AdminUtils/login"));
 
 export default function Auth() {
   const navigate = useNavigate();

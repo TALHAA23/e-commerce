@@ -1,5 +1,5 @@
-import { auth } from "../assets/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../assets/firebase";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 
 export default async function loginUser(email, password) {
   try {

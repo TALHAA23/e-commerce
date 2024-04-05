@@ -22,7 +22,7 @@ export default function Upload() {
   }
 
   return (
-    <div className=" h-screen flex gap-0 items-center justify-center">
+    <div className="h-full relative flex gap-0 items-center justify-center">
       <form onSubmit={mutate} className="form space-y-2">
         <h1 className="form-title capitalize">upload new product</h1>
         {isError && (
@@ -37,6 +37,7 @@ export default function Upload() {
           <input
             className="rounded-md border w-full py-4 px-1 text-[0.875rem] text-gray-400"
             type="text"
+            required
             name={field}
             placeholder={field}
           />
@@ -47,10 +48,12 @@ export default function Upload() {
           type="number"
           name="price"
           placeholder="price"
+          required
         />
         {/* category */}
         <select
           name="category"
+          defaultValue="Chose a category"
           className=" rounded-md border w-full py-4 px-1 text-[0.875rem] text-gray-400"
         >
           <option disabled selected>
@@ -70,17 +73,17 @@ export default function Upload() {
         </select>
         {/* availablity */}
         <AvailabilityCheck />
-        <label class="block">
-          <span class="sr-only">Choose a photo</span>
+        <label className="block">
+          <span className="sr-only">Choose a photo</span>
           <input
             type="file"
             name="image"
-            class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4
+            required
+            className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
           file:bg-violet-50 file:text-violet-700
-          hover:file:bg-violet-100
-    "
+          hover:file:bg-violet-100"
           />
         </label>
         <button
@@ -88,7 +91,7 @@ export default function Upload() {
           className="submit disabled:opacity-40"
           disabled={isPending}
         >
-          {isPending ? "Proccssing" : "Login"}
+          {isPending ? "processing" : "Login"}
         </button>
       </form>
     </div>

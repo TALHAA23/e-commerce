@@ -19,7 +19,7 @@ export default function Modification() {
   }
 
   return (
-    <div className="flex flex-col justify-center p-2 sm:p-4">
+    <div className="flex flex-col p-2 sm:p-4">
       <h1 className=" text-center font-bold text-3xl">
         Search for a product you want to modify
       </h1>
@@ -49,9 +49,11 @@ export default function Modification() {
         <h1 className=" text-center text-rose-700">{error.message}</h1>
       ) : (
         <div className=" w-full max-w-[700px] mx-auto space-y-4 border-t-2">
-          {data?.map((item) => (
-            <ModificationCard {...item} />
-          ))}
+          {!data?.length ? (
+            <h1 className=" text-center">No Result</h1>
+          ) : (
+            data?.map((item) => <ModificationCard {...item} />)
+          )}
         </div>
       )}
     </div>
