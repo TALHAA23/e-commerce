@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import AvailabilityCheck from "../AdminComponents/AvailabilityCheck";
 import uploadProduct from "../AdminUtils/upload";
 import { getUtils } from "../../utils/getUtils";
-const textFields = ["title", "category", "brand"];
+const textFields = ["title", "category", "brand", "amazonAddress"];
 export default function Upload() {
   const brandAndCategoiresQuery = useQuery({
     queryKey: ["brand&Categories"],
@@ -24,6 +24,8 @@ export default function Upload() {
       availability: formData.get("availability") == "on" ? true : false,
       publishDate: new Date(),
     };
+    if (!formDataToObject.category || !formDataToObject.brand)
+      throw new Error("Missing Category or Brand, type or choose from options");
     await uploadProduct(formDataToObject);
   }
 
@@ -43,7 +45,7 @@ export default function Upload() {
           <input
             className="rounded-md border w-full py-4 px-1 text-[0.875rem] text-gray-400"
             type="text"
-            required
+            required={/category|brand/.test(field) ? false : true}
             name={field}
             placeholder={field}
           />

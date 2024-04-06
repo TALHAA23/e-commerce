@@ -31,6 +31,7 @@ export default async function getProducts(
       )
     : query(
         productCollection,
+
         or(
           ...filterEntries
             .map(([key, value]) => value.map((val) => where(key, "==", val)))
@@ -43,6 +44,6 @@ export default async function getProducts(
   const querySnapshot = await getDocs(productsQuery);
   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
   const newProducts = querySnapshot.docs.map((doc) => doc.data());
-  setLastDoc(lastVisible);
+  // setLastDoc(lastVisible);
   return newProducts;
 }

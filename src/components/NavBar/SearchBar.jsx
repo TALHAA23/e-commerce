@@ -1,7 +1,6 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
-  const searchParam = useSearchParams()[0].get("q");
   const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();

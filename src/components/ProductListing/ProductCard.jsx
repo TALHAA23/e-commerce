@@ -1,43 +1,60 @@
 import { Link } from "react-router-dom";
-
-const text =
-  "1 Liter of gross-fed raw milk stored in premioum glass hsdiofh iod foidhfoh oi hweohf oiehfo";
-const link =
-  "https://www.amazon.com/UBeesize-Quick-Release-Cellphone-Compatible-Smartphones/dp/B0C69SXB61/ref=sr_1_1_sspa?crid=3OHI8MWNGTR8N&dib=eyJ2IjoiMSJ9.PRRTLxHb4gZb0VkqOIQJlVC4dV0bW8FgrqwarcqoL7oGL9nF-VqyNKMxR168-vJiE6fFn35fM9obqAIBhHe66bWWxPpwNhJ5VGdfHEKLU34qnO41LrWibBTHqfpMgOdKJzb-fkaDa7SjGgSos03uIdhhLgj5WE5qFfA4WMb0UE0t-0vdtLHVKNdn__ghisUhSBm5sp84Dh-hV2eXD0BDtAo5yqApjF-YuocTU1lRcUI.OAJSGCBI6BR5jVmDNEbasZRctEksz1hVt9XkpPRLg5g&dib_tag=se&keywords=tripod&qid=1711788468&sprefix=tripod%2Caps%2C543&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1";
-export default function ProductCard({ title, price, brand }) {
+import Tag from "../NavBar/Tag";
+import { isNewRelease } from "../../assets/isNewRelease";
+export default function ProductCard({
+  title,
+  price,
+  brand,
+  image,
+  availability,
+  publishDate,
+  amazonAddress,
+}) {
   return (
-    <Link to={link} target="blank">
-      <article className="relative flex w-full sm:min-h-[500px] sm:aspect-[2/3] rounded-2xl shadow-md shadow-slate-600 hover:scale-105 transition-all duration-100 ">
-        <Image />
+    <Link to={availability ? amazonAddress : ""} target="blank">
+      <article className="relative flex w-full sm:min-h-[300px] sm:aspect-[2/3] rounded-2xl shadow-md shadow-slate-600 hover:scale-105 transition-all duration-100 ">
+        <Image
+          url={image}
+          availability={availability}
+          publishDate={publishDate}
+        />
         <Details title={title} price={price} brand={brand} />
       </article>
     </Link>
   );
 }
 
-const Image = () => (
-  <img
-    src="/milk.jpg"
-    alt="milk"
-    className=" w-[40%] aspect-square sm:h-[60%] sm:w-full object-cover rounded sm:rounded-t-2xl"
-  />
+const Image = ({ url, availability, publishDate }) => (
+  <div className=" relative w-[45%] aspect-square sm:h-[60%] sm:w-full">
+    <img
+      src={url}
+      alt="img"
+      className=" w-full aspect-square object-cover rounded sm:rounded-t-2xl"
+    />
+    {!availability && (
+      <div className=" absolute top-0 w-full  h-full  bg-black/70 rounded-md flex justify-center items-center">
+        <small className=" capitalize text-white text-lg">not available</small>
+      </div>
+    )}
+    {isNewRelease(publishDate) && availability && <Tag />}
+  </div>
 );
 
 const Details = ({ title, price, brand }) => (
-  <div className="sm:absolute sm:h-[55%] flex flex-col justify-between bottom-0 w-full  bg-gray-200 rounded-r sm:rounded-2xl p-3 px-3">
-    <div>
-      <div className=" flex justify-between items-center">
-        <h1 className="font-bold text-lg sm:text-2xl">{title}</h1>
-        {brand && (
-          <small className=" text-xs text-slate-600 border-b-2 border-slate-800/35 ">
-            {brand}
-          </small>
-        )}
-      </div>
-      <p className="text-base sm:text-lg mt-2 text-slate-700">{text}</p>
+  <div className="sm:absolute sm:h-[45%] flex flex-col justify-between bottom-0 w-full  bg-gray-200 rounded-r sm:rounded-2xl p-3 px-3">
+    <h1 className="font-semibold text-lg sm:text-xl capitalize">
+      {title.length < 30 ? title : title.substring(0, 30) + "..."}
+    </h1>
+    <div className=" flex justify-between">
+      {brand && (
+        <small className="text-xs self-end text-slate-600 border-b-2 border-slate-800/35 ">
+          {brand}
+        </small>
+      )}
+      <h3 className="relative ml-auto font-semibold text-2xl pr-3 text-slate-800 flex gap-1">
+        <span className="text-xs text-gray-600 self-start pt-1">AED</span>
+        <span>{price}</span>
+      </h3>
     </div>
-    <h3 className="relative ml-auto font-semibold text-2xl pr-3 text-slate-800">
-      ${price}
-    </h3>
   </div>
 );

@@ -1,8 +1,11 @@
 import { productCollection } from "../assets/firebase";
-import { query, where, getDocs, or } from "@firebase/firestore";
+import { query, where, getDocs, or, orderBy } from "@firebase/firestore";
 
-export default async function getProductByKeyword(keyword) {
-  // TODO: Convert the keyword to lowercase
+export default async function getProductByKeyword(
+  keyword,
+  sort = ["title", "asc"]
+) {
+  const [property, order] = sort;
   const lowercasedKeyword = keyword.toLowerCase().trim();
   // Create a range for the query
   const endKeyword = lowercasedKeyword.replace(/.$/, (c) =>
@@ -11,7 +14,8 @@ export default async function getProductByKeyword(keyword) {
   let productsQuery = query(
     productCollection,
     where("title", ">=", lowercasedKeyword),
-    where("title", "<", endKeyword)
+    where("title", "<", endKeyword),
+    orderBy(property, order)
   );
   const querySnapshot = await getDocs(productsQuery);
   let products = [];

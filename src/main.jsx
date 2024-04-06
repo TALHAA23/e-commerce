@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools />
+        <ReactQueryDevtools initialIsOpen={true} position="right" />
         <FilterProvider>
           <MenuStateProvider>
             <App />

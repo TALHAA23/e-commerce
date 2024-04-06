@@ -32,6 +32,9 @@ export default function Filter() {
             {data.brands.map((brand) => (
               <Checkbox name="brand" value={brand} />
             ))}
+            <Checkbox name="brand" value="Brand1" />
+            <Checkbox name="brand" value="Brand2" />
+            <Checkbox name="brand" value="Brand3" />
           </div>
         )}
       </div>

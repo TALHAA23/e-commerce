@@ -10,10 +10,17 @@ const options = [
 export default function Sorter() {
   const [searchParam, setSearchParam] = useSearchParams();
 
+  // function addSortToURL(event) {
+  //   const queryParam = event.target.value;
+  //   const query = new URLSearchParams(`f=${queryParam}`);
+  //   searchParam.append("f", query);
+  //   setSearchParam((query) => query.append("f", queryParam));
+  // }
+
   function addSortToURL(event) {
     const queryParam = event.target.value;
-    const query = new URLSearchParams(`f=${queryParam}`);
-    setSearchParam(query);
+    searchParam.set("f", queryParam);
+    setSearchParam(searchParam);
   }
 
   return (

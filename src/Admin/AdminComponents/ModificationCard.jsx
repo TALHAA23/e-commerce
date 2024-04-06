@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteProduct } from "../AdminUtils/delete";
 import { updateProduct } from "../AdminUtils/update";
 import { useEffect, useRef } from "react";
-const fields = ["title", "brand", "category", "price"];
+const fields = ["title", "brand", "category", "price", "amazonAddress"];
 export default function ModificationCard(prop) {
   const cardRef = useRef();
   const changeMutation = useMutation({

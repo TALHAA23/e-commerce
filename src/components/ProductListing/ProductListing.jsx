@@ -7,6 +7,7 @@ import Loader from "../Loader/Loader";
 import Filter from "./Filter";
 import { useFilter, useFilterKey } from "../../Context/filterContext";
 import NoResult from "../NoResult";
+import Whatsapp from "../Whatsapp";
 
 export default function ProductListing({
   queryFn,
@@ -19,7 +20,7 @@ export default function ProductListing({
   const [page, setPage] = useState(0);
   const [lastDoc, setLastDoc] = useState(null);
   const [lastDocs, setLastDocs] = useState({});
-  const { isPending, isError, error, data, isFetching } = useQuery({
+  const { isPending, isError, error, data, isFetching, isSuccess } = useQuery({
     queryKey: [
       `${queryKey}--products-for-page-${page}-query-${searchParam || "A-Z"}${
         filterKey ? `-f:${filterKey}` : ""
@@ -75,13 +76,9 @@ export default function ProductListing({
         </div>
         {/* products area */}
         {data.length ? (
-          <div className="p-2 sm:p-6 flex flex-col gap-2 sm:gap-6 sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="p-2 sm:p-6 flex flex-col gap-3 sm:gap-6 sm:grid grid-cols-3 xl:grid-cols-4">
             {data.map((product) => (
-              <ProductCard
-                title={product.title}
-                price={product.price}
-                brand={product.brand}
-              />
+              <ProductCard {...product} />
             ))}
           </div>
         ) : (

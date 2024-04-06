@@ -20,7 +20,8 @@ export default function FilterProvider({ children }) {
       const newFilter = checked
         ? [...prevFilter[name], value]
         : prevFilter[name].filter((item) => item !== value);
-      setFilterKey(newFilter.toString());
+      // setFilterKey(newFilter.toString());
+      setFilterKey(sortArray(newFilter).toString());
       return { ...prevFilter, [name]: newFilter };
     });
   };
@@ -42,3 +43,5 @@ export default function FilterProvider({ children }) {
     </FilterContext.Provider>
   );
 }
+
+const sortArray = (array) => array.sort((a, b) => b.localeCompare(a));

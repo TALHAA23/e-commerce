@@ -9,7 +9,7 @@ export default function Whatsapp() {
     >
       <h1 className=" hidden sm:block">Chat with us on WhatsApp!</h1>
       <img
-        src="../../public/icons/whatsapp-color-svgrepo-com.svg"
+        src="/icons/whatsapp-color-svgrepo-com.svg"
         alt="whatsapp"
         className="  w-10 aspect-square"
       />

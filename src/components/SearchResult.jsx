@@ -11,7 +11,10 @@ export default function SearchResult({ results }) {
           <div className=" space-y-2">
             <h1 className=" font-bold text-xl">{result.title}</h1>
             <p>{result.description}</p>
-            <span className=" font-semibold">${result.price}</span>
+            <span className=" font-semibold">
+              <span className=" text-gray-600 text-xs"> AED</span>
+              {result.price}
+            </span>
           </div>
         </div>
       ))}
