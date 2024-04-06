@@ -15,8 +15,10 @@ export default function Services() {
     <div className="text-center sm:text-left">
       <h1 className=" uppercase font-bold text-lg">services</h1>
       <ul className=" border border-gray-700 rounded-md p-2">
-        {services.map((service) => (
-          <li className=" capitalize text-xs text-gray-300 my-1">{service}</li>
+        {services.map((service, index) => (
+          <li key={index} className=" capitalize text-xs text-gray-300 my-1">
+            {service}
+          </li>
         ))}
       </ul>
     </div>

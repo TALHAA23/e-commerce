@@ -3,6 +3,7 @@ import { useMenuState } from "../../Context/MenuStateContext";
 import { useQuery } from "@tanstack/react-query";
 import { getUtils } from "../../utils/getUtils";
 import Loader from "../Loader/Loader";
+import { Link } from "react-router-dom";
 export default function Menu() {
   const [isMenuShown, setIsMenuShown] = useMenuState();
   const { isPending, isError, error, data } = useQuery({
@@ -28,6 +29,13 @@ export default function Menu() {
           />
         </button>
       </div>
+      <Link
+        to="."
+        className="flex justify-between items-center my-1 w-full px-1 capitalize rounded-md hover:bg-gray-400"
+      >
+        <p className=" text-lg font-semibold">Home</p>
+        <img className="w-9" src="/icons/right-arrow-svgrepo-com.svg" alt=">" />
+      </Link>
       {isPending ? (
         <Loader />
       ) : isError ? (

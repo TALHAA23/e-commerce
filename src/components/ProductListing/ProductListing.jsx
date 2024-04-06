@@ -7,7 +7,6 @@ import Loader from "../Loader/Loader";
 import Filter from "./Filter";
 import { useFilter, useFilterKey } from "../../Context/filterContext";
 import NoResult from "../NoResult";
-import Whatsapp from "../Whatsapp";
 
 export default function ProductListing({
   queryFn,
@@ -29,7 +28,6 @@ export default function ProductListing({
     queryFn: () =>
       queryFn(
         lastDocs[searchParam || "A-Z"],
-        setLastDoc,
         urlQueryToFirebaseQuery(searchParam),
         10,
         filter,
@@ -42,7 +40,7 @@ export default function ProductListing({
   useEffect(() => {
     if (!searchParam) return;
     setPage(0);
-  }, [searchParam]);
+  }, [searchParam, filterKey]);
 
   useEffect(() => {
     setLastDocs((oldLastDocs) => ({
@@ -50,6 +48,10 @@ export default function ProductListing({
       [searchParam || "A-Z"]: lastDoc,
     }));
   }, [lastDoc]);
+
+  useEffect(() => {
+    if (isSuccess) setLastDoc(data.lastDocRef);
+  }, [isSuccess]);
 
   function changePage(diraction) {
     diraction = diraction.toLocaleLowerCase();
@@ -75,10 +77,10 @@ export default function ProductListing({
           Fetching...
         </div>
         {/* products area */}
-        {data.length ? (
+        {data.products.length ? (
           <div className="p-2 sm:p-6 flex flex-col gap-3 sm:gap-6 sm:grid grid-cols-3 xl:grid-cols-4">
-            {data.map((product) => (
-              <ProductCard {...product} />
+            {data.products.map((product, index) => (
+              <ProductCard key={index} {...product} />
             ))}
           </div>
         ) : (
@@ -95,7 +97,9 @@ export default function ProductListing({
 
           <button
             onClick={() => changePage("next")}
-            disabled={!data.length || data.length < 10 || isFetching}
+            disabled={
+              !data.products.length || data.products.length < 10 || isFetching
+            }
             className=" border-2 border-white text-white w-1/2 max-w-[250px] py-1 rounded-full text-lg disabled:opacity-60 hover:bg-white hover:text-black h transition-all duration-100"
           >
             Next

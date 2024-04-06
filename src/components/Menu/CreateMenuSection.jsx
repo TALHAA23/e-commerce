@@ -10,8 +10,9 @@ export default function CreateMenuSection({
         {sectionTitle}
       </h1>
       <div className=" flex flex-col pl-3 gap-1 my-2">
-        {sectionOptions.map((option) => (
+        {sectionOptions.map((option, index) => (
           <Link
+            key={index}
             to={`/by-property/${forProperty}?q=${option}`}
             className="flex justify-between items-center w-full px-1 capitalize rounded-md hover:bg-gray-400"
           >

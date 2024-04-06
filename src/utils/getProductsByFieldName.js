@@ -10,7 +10,6 @@ import { productCollection } from "../assets/firebase";
 
 export default async function getProductsByFieldName(
   lastDoc,
-  setLastDoc,
   sort = ["title", "asc"],
   itemsPerPage = 10,
   filter = {},
@@ -35,6 +34,5 @@ export default async function getProductsByFieldName(
   const querySnapshot = await getDocs(productsQuery);
   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
   const newProducts = querySnapshot.docs.map((doc) => doc.data());
-  setLastDoc(lastVisible);
-  return newProducts;
+  return { products: newProducts, lastDocRef: lastVisible };
 }

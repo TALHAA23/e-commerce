@@ -32,8 +32,10 @@ const Image = ({ url, availability, publishDate }) => (
       className=" w-full aspect-square object-cover rounded sm:rounded-t-2xl"
     />
     {!availability && (
-      <div className=" absolute top-0 w-full  h-full  bg-black/70 rounded-md flex justify-center items-center">
-        <small className=" capitalize text-white text-lg">not available</small>
+      <div className=" absolute top-0 w-full h-full bg-black/70 rounded-md flex justify-center items-center">
+        <small className="capitalize text-white text-sm sm:text-lg">
+          not available
+        </small>
       </div>
     )}
     {isNewRelease(publishDate) && availability && <Tag />}
@@ -42,8 +44,8 @@ const Image = ({ url, availability, publishDate }) => (
 
 const Details = ({ title, price, brand }) => (
   <div className="sm:absolute sm:h-[45%] flex flex-col justify-between bottom-0 w-full  bg-gray-200 rounded-r sm:rounded-2xl p-3 px-3">
-    <h1 className="font-semibold text-lg sm:text-xl capitalize">
-      {title.length < 30 ? title : title.substring(0, 30) + "..."}
+    <h1 className="font-semibold sm:text-lg capitalize">
+      {title.length < 60 ? title : title.substring(0, 60) + "..."}
     </h1>
     <div className=" flex justify-between">
       {brand && (
@@ -51,7 +53,7 @@ const Details = ({ title, price, brand }) => (
           {brand}
         </small>
       )}
-      <h3 className="relative ml-auto font-semibold text-2xl pr-3 text-slate-800 flex gap-1">
+      <h3 className="relative ml-auto font-semibold text-xl sm:text-2xl pr-3 text-slate-800 flex gap-1">
         <span className="text-xs text-gray-600 self-start pt-1">AED</span>
         <span>{price}</span>
       </h3>

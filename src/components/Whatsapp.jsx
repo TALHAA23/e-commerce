@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Whatsapp() {
   return (
     <Link
-      to={`https://wa.me/923349658595`}
+      to={`https://wa.me/923159119579`}
       target="_blank"
       className="fixed bottom-2 right-2 z-50 flex items-center gap-2 bg-black text-white rounded-md px-3 py-2"
     >
@@ -11,7 +11,7 @@ export default function Whatsapp() {
       <img
         src="/icons/whatsapp-color-svgrepo-com.svg"
         alt="whatsapp"
-        className="  w-10 aspect-square"
+        className="  w-9 aspect-square"
       />
     </Link>
   );

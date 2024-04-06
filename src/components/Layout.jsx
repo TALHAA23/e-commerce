@@ -11,7 +11,7 @@ export default function Layout() {
       <SortCustomization />
       <Outlet />
       <Footer />
-      {/* <Whatsapp /> */}
+      <Whatsapp />
     </div>
   );
 }

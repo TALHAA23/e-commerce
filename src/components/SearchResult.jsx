@@ -8,8 +8,10 @@ export default function SearchResult({ results }) {
             alt="milk"
             className=" h-full aspect-square rounded-md"
           />
-          <div className=" space-y-2">
-            <h1 className=" font-bold text-xl">{result.title}</h1>
+          <div className="space-y-2">
+            <h1 className="sm:font-bold text-sm sm:text-xl">
+              {result.title.substring(0, 180)}
+            </h1>
             <p>{result.description}</p>
             <span className=" font-semibold">
               <span className=" text-gray-600 text-xs"> AED</span>

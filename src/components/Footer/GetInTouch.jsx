@@ -18,8 +18,9 @@ export default function GetInTouch() {
   return (
     <div className=" pt-5">
       <ul className=" flex gap-2">
-        {data.map(([icon, link]) => (
+        {data.map(([icon, link], index) => (
           <Link
+            key={index}
             to={link}
             className=" border border-gray-300/20 rounded hover:scale-95"
           >
