@@ -3,7 +3,14 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteProduct } from "../AdminUtils/delete";
 import { updateProduct } from "../AdminUtils/update";
 import { useEffect, useRef } from "react";
-const fields = ["title", "brand", "category", "price", "amazonAddress"];
+const fields = [
+  "title",
+  "brand",
+  "category",
+  "price",
+  "amazonAddress",
+  "imageAddress",
+];
 export default function ModificationCard(prop) {
   const cardRef = useRef();
   const changeMutation = useMutation({
@@ -42,9 +49,12 @@ export default function ModificationCard(prop) {
     if ("availability" in formDataToObject)
       formDataToObject.availability =
         formDataToObject.availability == "on" ? true : false;
+    if ("imageAddress" in formDataToObject) {
+      formDataToObject.image = formDataToObject.imageAddress;
+      delete formDataToObject.imageAddress;
+    }
 
     const lowercaseFormData = toLowercaseObject(formDataToObject);
-    console.log("updating...");
     await updateProduct(prop.id, lowercaseFormData);
   }
 
@@ -56,7 +66,7 @@ export default function ModificationCard(prop) {
   }
 
   return (
-    <div ref={cardRef} className="relative h-[200px] flex shadow-md border">
+    <div ref={cardRef} className="relative h-[250px] flex shadow-md border">
       <div className="absolute right-0 z-10  bg-[#3c1884c0] text-white px-3 text-sm capitalize">
         {changeMutation?.isPending || deleteMutation?.isPending
           ? "processing"
@@ -69,7 +79,7 @@ export default function ModificationCard(prop) {
       <div className=" relative">
         <img
           src={prop.image}
-          alt="milk"
+          alt="img"
           loading="lazy"
           className=" h-full max-w-[100px] sm:max-w-max aspect-square object-cover rounded-md p-1"
         />
@@ -89,7 +99,9 @@ export default function ModificationCard(prop) {
             type="text"
             name={field}
             id={field}
-            placeholder={`${field}: ${prop[field]}`}
+            placeholder={`${field}: ${
+              prop[field == "imageAddress" ? "image" : field]
+            }`}
             className="text-xs sm:text-sm border h-[90%] pl-2 text-slate-600 rounded"
           />
         ))}
@@ -116,7 +128,8 @@ export default function ModificationCard(prop) {
 function toLowercaseObject(obj) {
   const newObj = {};
   for (const key in obj)
-    if (typeof obj[key] === "string") newObj[key] = obj[key].toLowerCase();
+    if (typeof obj[key] === "string")
+      newObj[key] = obj[key].toLowerCase().trim();
     else newObj[key] = obj[key];
   return newObj;
 }

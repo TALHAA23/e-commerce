@@ -9,17 +9,19 @@ export default async function uploadProduct(productData) {
     category: productData.category?.toLowerCase(),
     brand: productData.brand?.toLowerCase(),
   };
-  let imageUrl;
-  if (productData.image) {
+  // let imageUrl;
+  if (productData.image instanceof File) {
     try {
-      imageUrl = await uploadProductImage(productData.image);
+      if (!productData.image.name)
+        throw new Error("Attached image or use an image address");
+      lowercaseProductData.image = await uploadProductImage(productData.image);
     } catch (error) {
       console.error("Error uploading image:", error);
       throw error;
     }
   }
   // Update image property with download URL (if available)
-  lowercaseProductData.image = imageUrl;
+  // lowercaseProductData.image = imageUrl;
   try {
     const docRef = await addDoc(productCollection, lowercaseProductData);
     await recordBrandAndCategory({

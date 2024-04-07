@@ -3,7 +3,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import AvailabilityCheck from "../AdminComponents/AvailabilityCheck";
 import uploadProduct from "../AdminUtils/upload";
 import { getUtils } from "../../utils/getUtils";
-const textFields = ["title", "category", "brand", "amazonAddress"];
+const textFields = [
+  "title",
+  "category",
+  "brand",
+  "amazonAddress",
+  "imageAddress",
+];
 export default function Upload() {
   const brandAndCategoiresQuery = useQuery({
     queryKey: ["brand&Categories"],
@@ -19,19 +25,28 @@ export default function Upload() {
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
+    const imageAddress = formData.get("imageAddress");
+    formData.delete("imageAddress");
     const formDataToObject = {
       ...Object.fromEntries(formData.entries()),
       availability: formData.get("availability") == "on" ? true : false,
+      image: imageAddress || formData.get("image"),
       publishDate: new Date(),
     };
-    if (!formDataToObject.category || !formDataToObject.brand)
-      throw new Error("Missing Category or Brand, type or choose from options");
+    if (
+      !formDataToObject.category ||
+      !formDataToObject.brand ||
+      !formDataToObject.image
+    )
+      throw new Error(
+        "Missing fields, double check category, brand and, image fields"
+      );
     await uploadProduct(formDataToObject);
   }
 
   return (
-    <div className="h-full relative flex gap-0 items-center justify-center">
-      <form onSubmit={mutate} className="form space-y-2">
+    <div>
+      <form onSubmit={mutate} className="form space-y-2 mx-auto">
         <h1 className="form-title capitalize">upload new product</h1>
         {isError && (
           <p className=" text-center text-xs text-rose-700">{error.message}</p>
@@ -45,7 +60,7 @@ export default function Upload() {
           <input
             className="rounded-md border w-full py-4 px-1 text-[0.875rem] text-gray-400"
             type="text"
-            required={/category|brand/.test(field) ? false : true}
+            required={/category|brand|imageAddress/.test(field) ? false : true}
             name={field}
             placeholder={field}
           />
@@ -97,7 +112,6 @@ export default function Upload() {
           <input
             type="file"
             name="image"
-            required
             className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold

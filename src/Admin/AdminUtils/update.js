@@ -3,7 +3,8 @@ import { productCollection } from "../../assets/firebase";
 import uploadProductImage from "./uploadProductImage";
 
 export async function updateProduct(productId, data) {
-  if ("image" in data) data.image = await uploadProductImage(data.image);
+  if ("image" in data && data.image instanceof File)
+    data.image = await uploadProductImage(data.image);
   try {
     const productRef = doc(productCollection, productId);
     await updateDoc(productRef, data);
