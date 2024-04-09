@@ -1,8 +1,8 @@
-import "./form.css";
+import "../AdminUtils/form.css";
 import { useMutation } from "@tanstack/react-query";
 import loginUser from "../AdminUtils/login";
-import { Link, useNavigate } from "react-router-dom";
-import { lazy, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useIsUserAuthenticated } from "../../Context/UserProvider";
 
 export default function Auth() {
@@ -30,7 +30,10 @@ export default function Auth() {
   }, [isSuccess]);
 
   return (
-    <form onSubmit={mutate} className="form">
+    <form
+      onSubmit={mutate}
+      className="form absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"
+    >
       <p className="form-title">Login to your account</p>
       {isPending && (
         <h2 className="text-center text-sm font-semibold my-2">Please Wait</h2>

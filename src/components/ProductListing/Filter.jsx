@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useFilterVisablityControlsAndValue } from "../../Context/filterContext";
+import {
+  useFilter,
+  useFilterVisablityControlsAndValue,
+} from "../../Context/filterContext";
 import Checkbox from "../Checkbox/Checkbox";
 import Loader from "../Loader/Loader";
 import { getUtils } from "../../utils/getUtils";
@@ -7,6 +10,7 @@ import { getUtils } from "../../utils/getUtils";
 const brands = ["Brand1", "Brand2", "Brand3"];
 
 export default function Filter() {
+  const filter = useFilter();
   const isFilterVisable = useFilterVisablityControlsAndValue()[0];
   const { isPending, isError, error, data } = useQuery({
     queryKey: ["brand&Categories"],
@@ -30,7 +34,12 @@ export default function Filter() {
         ) : (
           <div className=" my-2">
             {data.brands.map((brand) => (
-              <Checkbox key={brand} name="brand" value={brand} />
+              <Checkbox
+                key={brand}
+                name="brand"
+                value={brand}
+                defaultChecked={filter?.brand?.includes(brand)}
+              />
             ))}
           </div>
         )}

@@ -7,6 +7,9 @@ import Loader from "../Loader/Loader";
 import Filter from "./Filter";
 import { useFilter, useFilterKey } from "../../Context/filterContext";
 import NoResult from "../NoResult";
+import Error from "../Error";
+
+const PRODUCTS_PER_PAGE = 10;
 
 export default function ProductListing({
   queryFn,
@@ -29,7 +32,7 @@ export default function ProductListing({
       queryFn(
         lastDocs[searchParam || "A-Z"],
         urlQueryToFirebaseQuery(searchParam),
-        10,
+        PRODUCTS_PER_PAGE,
         filter,
         propertyKeyValue
       ),
@@ -40,7 +43,7 @@ export default function ProductListing({
   useEffect(() => {
     if (!searchParam) return;
     setPage(0);
-  }, [searchParam, filterKey]);
+  }, [searchParam]);
 
   useEffect(() => {
     setLastDocs((oldLastDocs) => ({
@@ -50,20 +53,25 @@ export default function ProductListing({
   }, [lastDoc]);
 
   useEffect(() => {
-    if (isSuccess) setLastDoc(data.lastDocRef);
-  }, [isSuccess]);
+    if (!data) return;
+    setLastDoc(data.lastDocRef);
+  }, [isFetching]);
 
   function changePage(diraction) {
     diraction = diraction.toLocaleLowerCase();
-    setPage((prevPage) => {
+    setPage((currentPage) => {
       const nextPage =
-        diraction == "next" ? prevPage + 1 : prevPage <= 0 ? 0 : prevPage - 1;
+        diraction == "next"
+          ? currentPage + 1
+          : currentPage <= 0
+          ? 0
+          : currentPage - 1;
       return nextPage;
     });
   }
 
   if (isPending) return <Loader />;
-  else if (isError) console.log(error);
+  else if (isError) return <Error error={error} />;
 
   return (
     <div className="grid md:grid-cols-[250px_auto] ">
@@ -78,7 +86,7 @@ export default function ProductListing({
         </div>
         {/* products area */}
         {data.products.length ? (
-          <div className="p-2 sm:p-6 flex flex-col gap-3 sm:gap-6 sm:grid grid-cols-3 xl:grid-cols-4">
+          <div className="min-h-[90%] p-2 sm:p-6 flex flex-col gap-3 sm:gap-6 sm:grid grid-cols-3 xl:grid-cols-4">
             {data.products.map((product, index) => (
               <ProductCard key={index} {...product} />
             ))}
@@ -98,7 +106,9 @@ export default function ProductListing({
           <button
             onClick={() => changePage("next")}
             disabled={
-              !data.products.length || data.products.length < 10 || isFetching
+              !data.products.length ||
+              data.products.length < PRODUCTS_PER_PAGE ||
+              isFetching
             }
             className=" border-2 border-white text-white w-1/2 max-w-[250px] py-1 rounded-full text-lg disabled:opacity-60 hover:bg-white hover:text-black h transition-all duration-100"
           >

@@ -1,11 +1,11 @@
-import { useParams, useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import Home from "../pages/Home";
 import Layout from "../components/Layout";
-import Find from "../pages/Find";
-import ProductsByProperty from "../pages/ProductsByProperty";
-import { Suspense, lazy } from "react";
-import Loader from "../components/Loader/Loader";
-// import AdminLayout from "../Admin/AdminComponents/AdminLayout";
+import { lazy } from "react";
+import MySuspense from "../components/MySuspense";
+const Find = lazy(() => import("../pages/Find"));
+const ProductsByProperty = lazy(() => import("../pages/ProductsByProperty"));
+// admin
 const AdminLayout = lazy(() => import("../Admin/AdminComponents/AdminLayout"));
 const UserProvider = lazy(() => import("../Context/UserProvider"));
 const Admin = lazy(() => import("../Admin/Admin"));
@@ -25,57 +25,41 @@ export default function Routes() {
         },
         {
           path: "/find",
-          element: <Find />,
+          element: <MySuspense children={<Find />} />,
         },
         {
           path: "/by-property/:property",
-          element: <ProductsByProperty />,
+          element: <MySuspense children={<ProductsByProperty />} />,
         },
       ],
     },
     {
       path: "/admin",
       element: (
-        <Suspense fallback={<Loader />}>
-          <UserProvider>
-            <Suspense fallback={<Loader />}>
+        <MySuspense
+          children={
+            <UserProvider>
               <AdminLayout />
-            </Suspense>
-          </UserProvider>
-        </Suspense>
+            </UserProvider>
+          }
+        />
       ),
       children: [
         {
           index: true,
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Admin />
-            </Suspense>
-          ),
+          element: <MySuspense children={<Admin />} />,
         },
         {
           path: "login",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Auth />
-            </Suspense>
-          ),
+          element: <MySuspense children={<Auth />} />,
         },
         {
           path: "upload",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Upload />
-            </Suspense>
-          ),
+          element: <MySuspense children={<Upload />} />,
         },
         {
           path: "modification",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Modification />
-            </Suspense>
-          ),
+          element: <MySuspense children={<Modification />} />,
         },
       ],
     },

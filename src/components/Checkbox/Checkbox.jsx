@@ -1,6 +1,6 @@
 import { useFilterUpdater } from "../../Context/filterContext";
 import "./checkbox.css";
-export default function Checkbox({ name, value }) {
+export default function Checkbox({ name, value, defaultChecked = false }) {
   const filterUpdater = useFilterUpdater();
 
   return (
@@ -12,6 +12,7 @@ export default function Checkbox({ name, value }) {
         className="inp-cbx"
         id={value}
         type="checkbox"
+        defaultChecked={defaultChecked}
       />
       <label className="cbx" htmlFor={value}>
         <span>

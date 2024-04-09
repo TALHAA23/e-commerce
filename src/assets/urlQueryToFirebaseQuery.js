@@ -3,7 +3,7 @@ const qureyTypes = {
   pricelowtohigh: ["price", "asc"],
   pricehightolow: ["price", "desc"],
   newesttooldest: ["publishDate", "desc"],
-  oldesttonewest: ["publishDate", "desc"],
+  oldesttonewest: ["publishDate", "asc"],
 };
 
 export default function urlQueryToFirebaseQuery(searchParam) {

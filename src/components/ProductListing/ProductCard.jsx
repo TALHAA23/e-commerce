@@ -44,7 +44,7 @@ const Image = ({ url, availability, publishDate }) => (
 
 const Details = ({ title, price, brand }) => (
   <div className="sm:absolute sm:h-[45%] flex flex-col justify-between bottom-0 w-full  bg-gray-200 rounded-r sm:rounded-2xl p-3 px-3">
-    <h1 className="font-semibold sm:text-lg capitalize">
+    <h1 className="font-semibold lg:text-lg capitalize">
       {title.length < 60 ? title : title.substring(0, 60) + "..."}
     </h1>
     <div className=" flex justify-between">

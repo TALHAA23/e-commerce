@@ -4,8 +4,8 @@ export default function SearchResult({ results }) {
       {results.map((result) => (
         <div className=" h-[150px] border-2 border-slate-300 rounded-md flex gap-3 items-center p-1">
           <img
-            src="/milk.jpg"
-            alt="milk"
+            src={result.image}
+            alt="img"
             className=" h-full aspect-square rounded-md"
           />
           <div className="space-y-2">
